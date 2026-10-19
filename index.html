@@ -458,7 +458,7 @@
 <body>
 
   <div class="controls">
-    <div style="font-size: 13px; color: #555;">💡 提示：所有「標準」目標皆已改為可編輯輸入框，修改目標數值後狀態燈號會自動即時重新判定！</div>
+    <div style="font-size: 13px; color: #555;">💡 提示：表頭已更新為「標準目標」，點擊數值仍可直接修改目標，系統會自動重算達成狀態！</div>
     <button class="btn" onclick="window.print()">🖨️ 列印 / 另存為高質感 PDF</button>
   </div>
 
@@ -550,14 +550,14 @@
         </div>
       </div>
 
-      <!-- 數據比對表 (標準欄位全面可點擊自訂) -->
+      <!-- 數據比對表 (已更新為「標準目標」) -->
       <div class="section-title">運動機能與三維動力鏈數據比對</div>
       <table>
         <thead>
           <tr>
             <th style="width: 13%;">維度分類</th>
             <th style="width: 27%;">測試項目與對稱指標</th>
-            <th style="width: 12%;">標準目標 (可改)</th>
+            <th style="width: 12%;">標準目標</th>
             <th style="width: 8%;">基準</th>
             <th style="width: 8%;">回測</th>
             <th style="width: 10%;">進步幅度</th>
@@ -596,7 +596,7 @@
   </div>
 
   <script>
-    // 8 大指標陣列 (支援使用者隨意自訂標準目標 target)
+    // 8 大指標陣列
     const testData = [
       { cat: "活動與分離", name: "坐姿胸椎主動旋轉 (右)", unit: "°", target: 45, b: 36, r: 46, desc: "充分蓄能消除起身上抬" },
       { cat: "活動與分離", name: "仰臥髖關節內旋 IR (右)", unit: "°", target: 35, b: 24, r: 34, desc: "改善上桿推骨盆(距標差1°)" },
@@ -673,7 +673,7 @@
     // 支援直接自訂標準目標值
     function updateTarget(index, val) {
       testData[index].target = parseFloat(val) || 0;
-      testData[index].customTarget = true; // 標記為手動自訂
+      testData[index].customTarget = true;
       renderTable();
     }
 
