@@ -58,7 +58,7 @@
       height: 297mm;
       max-width: 210mm;
       background: var(--bg);
-      padding: 16mm 16mm 12mm 16mm;
+      padding: 15mm 16mm 12mm 16mm;
       box-shadow: 0 4px 20px rgba(0,0,0,0.12);
       position: relative;
       color: var(--text);
@@ -83,7 +83,7 @@
     }
     .title input.main-title {
       font-family: "Noto Serif TC", "Songti TC", "SimSun", serif;
-      font-size: 25px;
+      font-size: 24px;
       font-weight: 800;
       color: var(--primary);
       letter-spacing: 1px;
@@ -134,7 +134,7 @@
       display: grid;
       grid-template-columns: 1fr 0.65fr 0.65fr 1.25fr 1.25fr;
       gap: 8px;
-      margin: 11px 0 12px 0;
+      margin: 10px 0 11px 0;
       width: 100%;
     }
     .info-card {
@@ -142,7 +142,7 @@
       border: 1px solid rgba(61, 90, 75, 0.12);
       border-top: 2px solid var(--secondary);
       border-radius: 4px;
-      padding: 6px 8px;
+      padding: 5px 8px;
       display: flex;
       flex-direction: column;
       min-width: 0;
@@ -179,28 +179,28 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 11px;
       width: 100%;
     }
     .kpi-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 9px 12px;
+      padding: 8px 10px;
       text-align: center;
       border-top: 3px solid var(--secondary);
       min-width: 0;
     }
-    .kpi-title { font-size: 11.5px; color: #666; margin-bottom: 3px; font-weight: 600; }
-    .kpi-value { font-size: 21px; font-weight: 800; color: var(--primary); }
-    .kpi-sub { font-size: 11px; color: var(--green); font-weight: 700; margin-top: 2px; }
+    .kpi-title { font-size: 11px; color: #666; margin-bottom: 2px; font-weight: 600; }
+    .kpi-value { font-size: 20px; font-weight: 800; color: var(--primary); }
+    .kpi-sub { font-size: 10.5px; color: var(--green); font-weight: 700; margin-top: 2px; }
 
     /* 數據表格 */
     .section-title {
       font-family: "Noto Serif TC", "Songti TC", serif;
-      font-size: 14.5px;
+      font-size: 14px;
       color: var(--primary);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -209,35 +209,35 @@
     .section-title::before {
       content: "";
       width: 4px;
-      height: 14px;
+      height: 13px;
       background: var(--secondary);
       display: inline-block;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12px;
+      font-size: 11.5px;
       background: var(--card-bg);
       border-radius: 6px;
       overflow: hidden;
       border: 1px solid var(--border);
-      margin-bottom: 12px;
+      margin-bottom: 11px;
       table-layout: fixed;
     }
     th {
       background-color: var(--primary);
       color: #fff;
       font-weight: 600;
-      padding: 8px 4px;
+      padding: 7px 4px;
       text-align: center;
       font-size: 11.5px;
       letter-spacing: 0.5px;
     }
     td {
-      padding: 7.5px 5px;
+      padding: 6.5px 5px;
       border-bottom: 1px solid var(--border);
       text-align: center;
-      line-height: 1.35;
+      line-height: 1.3;
     }
     tr:last-child td { border-bottom: none; }
     tr:nth-child(even) { background-color: #fbfaf7; }
@@ -247,13 +247,13 @@
       border: 1px solid #ccc;
       border-radius: 3px;
       padding: 2px;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--text);
       outline: none;
     }
     .tag {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 700;
       padding: 2px 6px;
       border-radius: 10px;
@@ -264,19 +264,19 @@
     .tag-near { background: #fffde7; color: var(--yellow); }
     .tag-warn { background: #ffebee; color: var(--red); }
 
-    /* 下方兩大說明欄（字體放大至 13px、高度增至 170px，徹底填滿下方空白） */
+    /* 下方兩大說明欄（改為 contenteditable div，徹底消除捲軸截斷） */
     .notes-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       width: 100%;
     }
     .note-box {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 14px 16px;
+      padding: 12px 14px;
       border-left: 4.5px solid var(--primary);
       min-width: 0;
       display: flex;
@@ -286,28 +286,32 @@
       width: 100%;
       border: none;
       background: transparent;
-      font-size: 14.5px;
+      font-size: 14px;
       color: var(--primary);
       font-weight: 700;
       outline: none;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       padding: 1px 0;
       border-bottom: 1px dashed transparent;
     }
     .note-title-input:hover, .note-title-input:focus {
       border-bottom-color: var(--secondary);
     }
-    .note-box textarea {
+    
+    /* 可直接編輯的文字容器：無捲軸、列印完整輸出 */
+    .editable-div {
       width: 100%;
-      height: 170px; /* 高度調升至 170px */
-      border: none;
-      resize: none;
-      font-size: 13px; /* 字體調大至 13px */
+      min-height: 155px;
+      font-size: 12px;
       color: var(--text);
-      line-height: 1.7; /* 行距更寬鬆 */
-      background: transparent;
+      line-height: 1.6;
       outline: none;
-      overflow-y: hidden;
+      white-space: pre-wrap; /* 保留換行 */
+      word-break: break-word;
+    }
+    .editable-div:focus {
+      background-color: rgba(61, 90, 75, 0.02);
+      border-radius: 4px;
     }
 
     /* 頁尾 */
@@ -342,7 +346,7 @@
       text-align: right;
     }
 
-    /* 列印與 PDF 輸出規則 */
+    /* 列印與 PDF 輸出規則 (100% 完整無捲軸) */
     @media print {
       body { background: none; padding: 0; }
       .controls { display: none; }
@@ -361,14 +365,13 @@
         print-color-adjust: exact;
       }
       .info-input, .info-label-input, .footer-input, .note-title-input { border-bottom: none !important; }
-      td input.num-input { border: none !important; background: transparent; font-size: 12.5px; }
+      td input.num-input { border: none !important; background: transparent; font-size: 12px; }
       
-      .note-box textarea {
+      .editable-div {
+        min-height: auto !important;
         height: auto !important;
         overflow: visible !important;
         display: block !important;
-        font-size: 13px !important;
-        line-height: 1.7 !important;
       }
       @page { size: A4 portrait; margin: 0; }
     }
@@ -377,7 +380,7 @@
 <body>
 
   <div class="controls">
-    <div style="font-size: 13px; color: #555;">💡 提示：下方兩格文字已放大至 13px，卡片高度已延伸至 170px，底部留白已自然補齊。</div>
+    <div style="font-size: 13px; color: #555;">💡 提示：說明欄已改為原生編輯容器，匯出 PDF 時絕無捲軸箭頭，文字 100% 完整印出。</div>
     <button class="btn" onclick="window.print()">🖨️ 列印 / 另存為高質感 PDF</button>
   </div>
 
@@ -457,20 +460,20 @@
         </tbody>
       </table>
 
-      <!-- 下方兩大說明欄（字體與高度已加大） -->
+      <!-- 下方兩大說明欄（使用 contenteditable，絕無捲軸與截斷） -->
       <div class="notes-container">
         <div class="note-box">
           <input class="note-title-input" value="⛳ 動作機制突破與右髖強化計畫">
-          <textarea id="note-left" oninput="autoResize(this)">1. 機制突破：胸椎轉幅達 46° 消除起身上抬；Smash Factor 升至 1.47 證明動力鏈動能流暢傳遞。
-2. 右髖攻堅策略：右髖內旋由 24° 躍升至 34°（改善 +41.7%），距標準僅差 1°。下階段導入「90/90 PAILs/RAILs + 關節末端主動抬離 (Lift-Offs)」等長收縮，鎖定右側後關節囊，徹底消除上桿 Sway 代償。</textarea>
+          <div class="editable-div" contenteditable="true">1. 機制突破：胸椎轉幅達 46° 消除起身上抬；Smash Factor 升至 1.47 證明動力鏈動能流暢傳遞。
+2. 右髖攻堅策略：右髖內旋由 24° 躍升至 34°（改善 +41.7%），距標準僅差 1°。下階段導入「90/90 PAILs/RAILs + 關節末端主動抬離 (Lift-Offs)」等長收縮，鎖定右側後關節囊，徹底消除上桿 Sway 代償。</div>
         </div>
         <div class="note-box" style="border-left-color: var(--secondary);">
           <input class="note-title-input" value="🎯 賽季中 50 分鐘維護課表 (In-Season)">
-          <textarea id="note-right" oninput="autoResize(this)">每週 1 次，無代謝延遲性痠痛（DOMS），鎖定神經衝動：
+          <div class="editable-div" contenteditable="true">每週 1 次，無代謝延遲性痠痛（DOMS），鎖定神經衝動：
 • 00-08m 組織重置：右髖 90/90 PAILs/RAILs + 側臥胸椎螺旋開啟
 • 08-20m 神經時序：雙側 3kg 藥球擲遠 (4次x3組) + 地雷管旋轉爆發推
 • 20-40m 推地抗旋：下肢 CMJ 推地跳 (3次x3組) + 單側地雷管 RDL (6次x3組) + Pallof 抗旋
-• 40-50m 神經降載：PRI 90/90 骨盆後傾深呼吸 + 單槓減壓懸垂</textarea>
+• 40-50m 神經降載：PRI 90/90 骨盆後傾深呼吸 + 單槓減壓懸垂</div>
         </div>
       </div>
     </div>
@@ -549,15 +552,8 @@
       }
     }
 
-    function autoResize(el) {
-      el.style.height = 'auto';
-      el.style.height = Math.max(170, el.scrollHeight) + 'px';
-    }
-
     window.onload = function() {
       renderTable();
-      autoResize(document.getElementById('note-left'));
-      autoResize(document.getElementById('note-right'));
     };
   </script>
 </body>
