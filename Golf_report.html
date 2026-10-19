@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>高爾夫專項體能 8 週回測報告生成器</title>
+  <style>
+    :root {
+      --primary: #3d5a4b;
+      --secondary: #c59d5f;
+      --bg: #fdfbf7;
+      --text: #2c3330;
+      --card-bg: #ffffff;
+      --border: #e2ddd5;
+      --green: #2e7d32;
+      --yellow: #b28900;
+      --red: #c62828;
+    }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Microsoft JhengHei", sans-serif; 
+    }
+    body { 
+      background-color: #ebe7df; 
+      padding: 20px; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+    }
+    
+    /* 頂部控制列 */
+    .controls {
+      width: 210mm;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      background-color: var(--primary);
+      color: #fff;
+      border: 1px solid var(--secondary);
+      padding: 10px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+    }
+    .btn:hover { background-color: #2e4438; }
+
+    /* A4 紙張本體 */
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      height: 297mm;
+      max-width: 210mm;
+      background: var(--bg);
+      padding: 18mm 16mm 14mm 16mm;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      position: relative;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    /* 頂部 Header */
+    .header {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+    }
+    .title {
+      flex: 1;
+      min-width: 0;
+    }
+    .title input.main-title {
+      font-family: "Noto Serif TC", "Songti TC", "SimSun", serif;
+      font-size: 25px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+    }
+    .title input.sub-title {
+      font-size: 11.5px;
+      color: var(--secondary);
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+    }
+
+    /* 右上角徽章 (預設 Golf S&C System) */
+    .badge-wrap {
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+    .badge-input {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--secondary);
+      letter-spacing: 1px;
+      text-align: center;
+      outline: none;
+      width: 195px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .badge-input:focus {
+      background-color: #2a3e33;
+      border-color: #e5b974;
+    }
+
+    /* 4 欄網格資訊列 */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.65fr 1.3fr 1.3fr;
+      gap: 10px;
+      margin: 14px 0 14px 0;
+      width: 100%;
+    }
+    .info-card {
+      background: rgba(61, 90, 75, 0.04);
+      border: 1px solid rgba(61, 90, 75, 0.12);
+      border-top: 2px solid var(--secondary);
+      border-radius: 4px;
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .info-label-input {
+      border: none;
+      background: transparent;
+      font-size: 11.5px;
+      color: var(--primary);
+      font-weight: 700;
+      outline: none;
+      width: 100%;
+      margin-bottom: 2px;
+    }
+    .info-input {
+      width: 100%;
+      min-width: 0;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 600;
+      outline: none;
+      padding: 2px 0;
+      border-bottom: 1px dashed #c0b9af;
+    }
+    .info-input:focus {
+      border-bottom-color: var(--primary);
+    }
+
+    /* KPI 核心亮點卡片 */
+    .kpi-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+      width: 100%;
+    }
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      text-align: center;
+      border-top: 3px solid var(--secondary);
+      min-width: 0;
+    }
+    .kpi-title { font-size: 12px; color: #666; margin-bottom: 4px; font-weight: 600; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: var(--primary); }
+    .kpi-sub { font-size: 11.5px; color: var(--green); font-weight: 700; margin-top: 3px; }
+
+    /* 數據表格 */
+    .section-title {
+      font-family: "Noto Serif TC", "Songti TC", serif;
+      font-size: 15px;
+      color: var(--primary);
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+    }
+    .section-title::before {
+      content: "";
+      width: 4px;
+      height: 14px;
+      background: var(--secondary);
+      display: inline-block;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      background: var(--card-bg);
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+      table-layout: fixed;
+    }
+    th {
+      background-color: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      padding: 9px 4px;
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+    td {
+      padding: 9px 5px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      line-height: 1.35;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) { background-color: #fbfaf7; }
+    td input.num-input {
+      width: 48px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 2px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      outline: none;
+    }
+    .tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .tag-pass { background: #e8f5e9; color: var(--green); }
+    .tag-near { background: #fffde7; color: var(--yellow); }
+    .tag-warn { background: #ffebee; color: var(--red); }
+
+    /* 臨床診斷與處方卡片 (標題改為可編輯) */
+    .notes-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    .note-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      border-left: 4px solid var(--primary);
+      min-width: 0;
+    }
+    .note-title-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 13.5px;
+      color: var(--primary);
+      font-weight: 700;
+      outline: none;
+      margin-bottom: 6px;
+      padding: 1px 0;
+      border-bottom: 1px dashed transparent;
+    }
+    .note-title-input:hover, .note-title-input:focus {
+      border-bottom-color: var(--secondary);
+    }
+    .note-box textarea {
+      width: 100%;
+      height: 110px;
+      border: none;
+      resize: none;
+      font-size: 12.5px;
+      color: var(--text);
+      line-height: 1.6;
+      background: transparent;
+      outline: none;
+    }
+
+    /* 頁尾 */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .footer-input {
+      border: none;
+      background: transparent;
+      color: #888;
+      font-size: 11px;
+      outline: none;
+      padding: 2px 0;
+    }
+    .footer-input:hover, .footer-input:focus {
+      border-bottom: 1px dashed var(--secondary);
+      color: var(--text);
+    }
+    .footer-left {
+      width: 48%;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+    .footer-right {
+      width: 50%;
+      text-align: right;
+    }
+
+    /* 列印與 PDF 輸出規則 */
+    @media print {
+      body { background: none; padding: 0; }
+      .controls { display: none; }
+      .a4-page {
+        box-shadow: none;
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 14mm 14mm 10mm 14mm;
+      }
+      .badge-input {
+        border: none !important;
+        background: var(--primary) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .info-input, .info-label-input, .footer-input, .note-title-input { border-bottom: none !important; }
+      td input.num-input { border: none !important; background: transparent; font-size: 13px; }
+      textarea { resize: none; border: none; }
+      @page { size: A4 portrait; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <div style="font-size: 13px; color: #555;">💡 提示：右上角徽章、各區塊標題與內容皆已支援自訂編輯，點擊直接修改。</div>
+    <button class="btn" onclick="window.print()">🖨️ 列印 / 另存為高質感 PDF</button>
+  </div>
+
+  <div class="a4-page">
+    <div>
+      <!-- 頁首與可編輯徽章 (預設 Golf S&C System) -->
+      <div class="header">
+        <div class="title">
+          <input class="main-title" value="高爾夫專項體能 8 週回測報告">
+          <input class="sub-title" value="GOLF PERFORMANCE & MOVEMENT ASSESSMENT REPORT">
+        </div>
+        <div class="badge-wrap">
+          <input class="badge-input" value="Golf S&C System">
+        </div>
+      </div>
+
+      <!-- 4 欄網格資訊列 -->
+      <div class="info-grid">
+        <div class="info-card">
+          <input class="info-label-input" value="👤 學員姓名">
+          <input class="info-input" value="王大明 先生">
+        </div>
+        <div class="info-card">
+          <input class="info-label-input" value="⛳ 目前差點">
+          <input class="info-input" value="16">
+        </div>
+        <div class="info-card">
+          <input class="info-label-input" value="📅 評估週期">
+          <input class="info-input" value="8 週 (2026/08 - 2026/10)">
+        </div>
+        <div class="info-card">
+          <input class="info-label-input" value="🏋️ 負責教練">
+          <input class="info-input" value="游教練 (體能工作室)">
+        </div>
+      </div>
+
+      <!-- 核心 KPI 三卡 -->
+      <div class="kpi-container">
+        <div class="kpi-card">
+          <div class="kpi-title">1 號木桿頭速度 (Driver)</div>
+          <div class="kpi-value" id="kpi-speed">96.4 <span style="font-size: 14px; font-weight: normal;">mph</span></div>
+          <div class="kpi-sub" id="kpi-speed-sub">📈 +4.8 mph (增加約 14 碼)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">胸椎旋轉角度 (Thoracic)</div>
+          <div class="kpi-value" id="kpi-t-spine">46°</div>
+          <div class="kpi-sub" id="kpi-t-spine-sub">📈 +10° (達到巡迴賽標準)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">抗代償核心耐力 (Pallof)</div>
+          <div class="kpi-value" id="kpi-core">48 <span style="font-size: 14px; font-weight: normal;">秒</span></div>
+          <div class="kpi-sub" id="kpi-core-sub">📈 +71% (下背保護力提升)</div>
+        </div>
+      </div>
+
+      <!-- 數據比對表 -->
+      <div class="section-title">三維運動表現量測數據比對</div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 13%;">維度</th>
+            <th style="width: 25%;">測試項目</th>
+            <th style="width: 10%;">標準</th>
+            <th style="width: 10%;">基準 (W1)</th>
+            <th style="width: 10%;">回測 (W8)</th>
+            <th style="width: 10%;">進步幅度</th>
+            <th style="width: 10%;">狀態</th>
+            <th style="width: 12%;">實務意義</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- 資料由 JS 自動渲染並重算 -->
+        </tbody>
+      </table>
+
+      <!-- 臨床診斷與下階段處方 (標題皆可自訂編輯) -->
+      <div class="notes-container">
+        <div class="note-box">
+          <input class="note-title-input" value="⛳ 動作機制突破與代償分析">
+          <textarea>胸椎主動旋轉由 36° 提升至 46°，上桿不再出現起身上抬（Loss of Posture）。右髖內旋進步至 34°，有效解決上桿推骨盆（Sway）的舊有問題，動力鏈蓄能大幅提升，開球甜點率與擊球紮實度顯著優化。</textarea>
+        </div>
+        <div class="note-box" style="border-left-color: var(--secondary);">
+          <input class="note-title-input" value="🎯 下階段賽季維護處方 (In-Season)">
+          <textarea>進入打球旺季，課表切換為「神經快速啟動＋單側旋轉代償重置」。每週固定 1 次 50 分鐘，鞏固右髖極限內旋能力與下肢垂直推地反作用力（GRF），維持 18 洞打完腰椎零疲勞與最佳桿頭速度。</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <div class="footer">
+      <input class="footer-input footer-left" value="MOVEMENT & GOLF PERFORMANCE SPECIALIST">
+      <input class="footer-input footer-right" value="本評估數據為個人動作機能追蹤紀錄，非醫療診斷證明">
+    </div>
+  </div>
+
+  <script>
+    const testData = [
+      { cat: "活動與分離", name: "坐姿胸椎旋轉 (右)", unit: "°", target: 45, b: 36, r: 46, desc: "解決起身上抬代償" },
+      { cat: "活動與分離", name: "坐姿胸椎旋轉 (左)", unit: "°", target: 45, b: 38, r: 47, desc: "確保送桿旋轉順暢" },
+      { cat: "活動與分離", name: "仰臥髖內旋 IR (右)", unit: "°", target: 35, b: 24, r: 34, desc: "改善上桿推骨盆" },
+      { cat: "活動與分離", name: "仰臥髖內旋 IR (左)", unit: "°", target: 35, b: 32, r: 38, desc: "保護前導膝與腰椎" },
+      { cat: "活動與分離", name: "骨盆胸椎分離能力", unit: "分", target: 2, b: 1, r: 3, desc: "X-Factor 扭力蓄能" },
+      { cat: "旋轉爆發力", name: "3kg 藥球側擲 (右)", unit: "mph", target: 20, b: 17.5, r: 21.2, desc: "軀幹瞬間旋轉功率" },
+      { cat: "旋轉爆發力", name: "1號木桿頭速度", unit: "mph", target: 95, b: 91.6, r: 96.4, desc: "增加開球有效碼數" },
+      { cat: "抗旋轉剛性", name: "Pallof 靜態抗旋 (右)", unit: "秒", target: 45, b: 28, r: 48, desc: "預防擊球後下背痛" }
+    ];
+
+    function renderTable() {
+      const tbody = document.getElementById("table-body");
+      tbody.innerHTML = "";
+      testData.forEach((row, index) => {
+        const diff = (row.r - row.b);
+        const pct = row.b !== 0 ? ((diff / row.b) * 100).toFixed(1) : 0;
+        
+        let tagClass = "tag-warn";
+        let tagText = "🔴 待加強";
+        if (row.r >= row.target) {
+          tagClass = "tag-pass";
+          tagText = "🟢 達標";
+        } else if (row.r >= row.target * 0.9) {
+          tagClass = "tag-near";
+          tagText = "🟡 接近";
+        }
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="color: #666; font-weight: 500;">${row.cat}</td>
+          <td style="font-weight: 600; text-align: left; padding-left: 8px;">${row.name}</td>
+          <td style="color: #777;">≥ ${row.target}${row.unit}</td>
+          <td><input class="num-input" type="number" step="0.1" value="${row.b}" onchange="updateRow(${index}, 'b', this.value)"></td>
+          <td><input class="num-input" type="number" step="0.1" value="${row.r}" onchange="updateRow(${index}, 'r', this.value)"></td>
+          <td style="font-weight: 700; color: ${diff >= 0 ? 'var(--green)' : 'var(--red)'};">
+            ${diff >= 0 ? '+' : ''}${pct}%
+          </td>
+          <td><span class="tag ${tagClass}">${tagText}</span></td>
+          <td style="font-size: 11px; color: #555; text-align: left; padding-left: 4px;">${row.desc}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      updateKPIs();
+    }
+
+    function updateRow(index, field, val) {
+      testData[index][field] = parseFloat(val) || 0;
+      renderTable();
+    }
+
+    function updateKPIs() {
+      const speed = testData.find(d => d.name.includes("桿頭速度"));
+      if (speed) {
+        document.getElementById("kpi-speed").innerHTML = `${speed.r} <span style="font-size: 14px; font-weight: normal;">mph</span>`;
+        const diff = (speed.r - speed.b).toFixed(1);
+        const yards = Math.round(diff * 2.8);
+        document.getElementById("kpi-speed-sub").innerText = `📈 +${diff} mph (約增加 ${yards} 碼)`;
+      }
+      const tspine = testData.find(d => d.name.includes("胸椎") && d.name.includes("右"));
+      if (tspine) {
+        document.getElementById("kpi-t-spine").innerText = `${tspine.r}°`;
+        const diff = (tspine.r - tspine.b).toFixed(0);
+        document.getElementById("kpi-t-spine-sub").innerText = `📈 +${diff}° (轉身幅度顯著建立)`;
+      }
+      const core = testData.find(d => d.name.includes("Pallof") && d.name.includes("右"));
+      if (core) {
+        document.getElementById("kpi-core").innerHTML = `${core.r} <span style="font-size: 14px; font-weight: normal;">秒</span>`;
+        const pct = (((core.r - core.b) / core.b) * 100).toFixed(0);
+        document.getElementById("kpi-core-sub").innerText = `📈 +${pct}% (抗剪力保護到位)`;
+      }
+    }
+
+    window.onload = renderTable;
+  </script>
+</body>
+</html>
