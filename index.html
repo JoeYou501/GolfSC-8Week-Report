@@ -129,7 +129,7 @@
       border-color: #e5b974;
     }
 
-    /* 7 欄微型網格（身高體重置中） */
+    /* 7 欄微型網格 */
     .info-grid {
       display: grid;
       grid-template-columns: 1.0fr 0.75fr 0.6fr 0.85fr 0.85fr 1.35fr 1.3fr;
@@ -249,10 +249,10 @@
       border-bottom: 1px dashed var(--secondary);
     }
 
-    /* 數據表格：字體放大與閱讀優化 */
+    /* 數據表格 */
     .section-title {
       font-family: "Noto Serif TC", "Songti TC", serif;
-      font-size: 15.5px; /* 標題放大 */
+      font-size: 15.5px;
       color: var(--primary);
       margin-bottom: 6px;
       display: flex;
@@ -270,7 +270,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12.5px; /* 表格字體放大 */
+      font-size: 12.5px;
       background: var(--card-bg);
       border-radius: 6px;
       overflow: hidden;
@@ -284,7 +284,7 @@
       font-weight: 600;
       padding: 7px 4px;
       text-align: center;
-      font-size: 12px; /* 表頭文字放大 */
+      font-size: 12px;
       letter-spacing: 0.5px;
     }
     td {
@@ -295,17 +295,36 @@
     }
     tr:last-child td { border-bottom: none; }
     tr:nth-child(even) { background-color: #fbfaf7; }
+    
+    /* 數值輸入框（含標準欄位） */
     td input.num-input {
-      width: 48px;
+      width: 46px;
       text-align: center;
       border: 1px solid #ccc;
       border-radius: 3px;
       padding: 2px;
-      font-size: 13px; /* 數據數值放大 */
+      font-size: 12.5px;
       font-weight: 700;
       color: var(--text);
       outline: none;
     }
+    td input.target-input {
+      width: 42px;
+      text-align: center;
+      border: 1px dashed #c0b9af;
+      border-radius: 3px;
+      padding: 1px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #555;
+      background: rgba(0,0,0,0.02);
+      outline: none;
+    }
+    td input.target-input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
     .tag {
       font-size: 10.5px;
       font-weight: 700;
@@ -420,7 +439,11 @@
         border-bottom: none !important; 
       }
       .input-unit-wrapper { border-bottom: none !important; }
-      td input.num-input { border: none !important; background: transparent; font-size: 13px; }
+      td input.num-input, td input.target-input { 
+        border: none !important; 
+        background: transparent !important; 
+        font-size: 12.5px; 
+      }
       
       .editable-div {
         min-height: auto !important;
@@ -435,7 +458,7 @@
 <body>
 
   <div class="controls">
-    <div style="font-size: 13px; color: #555;">💡 提示：身高體重數據已置中，數據表格字體已放大，閱讀清晰且完美鎖定 A4 單頁。</div>
+    <div style="font-size: 13px; color: #555;">💡 提示：所有「標準」目標皆已改為可編輯輸入框，修改目標數值後狀態燈號會自動即時重新判定！</div>
     <button class="btn" onclick="window.print()">🖨️ 列印 / 另存為高質感 PDF</button>
   </div>
 
@@ -452,7 +475,7 @@
         </div>
       </div>
 
-      <!-- 7 欄微型網格（身高與體重已置中） -->
+      <!-- 7 欄微型網格 -->
       <div class="info-grid">
         <div class="info-card">
           <input class="info-label-input" value="👤 學員姓名">
@@ -527,14 +550,14 @@
         </div>
       </div>
 
-      <!-- 數據比對表 (字體已加大至 12.5px - 13px) -->
+      <!-- 數據比對表 (標準欄位全面可點擊自訂) -->
       <div class="section-title">運動機能與三維動力鏈數據比對</div>
       <table>
         <thead>
           <tr>
             <th style="width: 13%;">維度分類</th>
             <th style="width: 27%;">測試項目與對稱指標</th>
-            <th style="width: 12%;">標準</th>
+            <th style="width: 12%;">標準目標 (可改)</th>
             <th style="width: 8%;">基準</th>
             <th style="width: 8%;">回測</th>
             <th style="width: 10%;">進步幅度</th>
@@ -543,7 +566,7 @@
           </tr>
         </thead>
         <tbody id="table-body">
-          <!-- 資料由 JS 自動渲染並連動換算 -->
+          <!-- 資料由 JS 自動渲染 -->
         </tbody>
       </table>
 
@@ -552,13 +575,13 @@
         <div class="note-box">
           <input class="note-title-input" value="⛳ 動作機制突破與數據深度解讀">
           <div class="editable-div" contenteditable="true">1. 最大肌力與推地力突破：六角槓硬舉提升至 135kg（約 1.80x BW），達職業選手級垂直反作用力（vGRF）儲備標準；側向跳遠達 145cm（約身高 82.9%），雙側落差僅 2cm（1.4%），確保下桿瞬間能牢牢「煞車鎖定」，將能量精準傳遞至桿頭。
-2. 關節瓶頸攻堅：胸椎轉幅 46° 徹底消除上抬；右髖內旋進步至 34°（距標準差 1°）。下階段導入「90/90 PAILs/RAILs + 關節末端 Lift-Offs」，突破最後限制並鞏固上桿蓄能。</div>
+2. 關節瓶頸攻堅：胸椎轉幅 46° 徹底消除上抬；藥球跪姿前擲進步至 6.4m（+33.3%），證明前側胸腹動力鏈爆發力顯著建立；右髖內旋進步至 34°（距標準差 1°），下階段導入「90/90 PAILs/RAILs + 關節末端 Lift-Offs」，突破最後限制並鞏固上桿蓄能。</div>
         </div>
         <div class="note-box" style="border-left-color: var(--secondary);">
           <input class="note-title-input" value="🎯 賽季中 50 分鐘維護課表 (In-Season)">
           <div class="editable-div" contenteditable="true">每週 1 次，無代謝延遲性痠痛（DOMS），專注神經傳導與發力率（RFD）：
 • 00-08m 組織重置：右髖 90/90 PAILs/RAILs (2循環) + 側臥胸椎螺旋開啟 (每側6次)
-• 08-20m 神經時序：側向單腳爆發跳 (3次x3組，落點煞停2秒) + 3kg 跪姿藥球側擲 (4次x3組)
+• 08-20m 神經時序：側向單腳爆發跳 (3次x3組，落點煞停2秒) + 3kg 藥球跪姿爆發前擲 (4次x3組)
 • 20-40m 推地抗旋：六角槓硬舉爆發推 (3次x3組 @60%1RM, VBT>0.85m/s) + 單側地雷管 RDL + 半跪姿 Pallof 抗旋
 • 40-50m 神經降載：PRI 90/90 骨盆後傾呼吸 (10次深呼吸) + 單槓減壓懸垂 (30秒x2組)</div>
         </div>
@@ -573,15 +596,15 @@
   </div>
 
   <script>
-    // 8 大指標陣列
+    // 8 大指標陣列 (支援使用者隨意自訂標準目標 target)
     const testData = [
       { cat: "活動與分離", name: "坐姿胸椎主動旋轉 (右)", unit: "°", target: 45, b: 36, r: 46, desc: "充分蓄能消除起身上抬" },
       { cat: "活動與分離", name: "仰臥髖關節內旋 IR (右)", unit: "°", target: 35, b: 24, r: 34, desc: "改善上桿推骨盆(距標差1°)" },
       { cat: "活動與分離", name: "仰臥髖關節內旋 IR (左)", unit: "°", target: 35, b: 32, r: 38, desc: "減速剎車保護前腳膝腰" },
-      { cat: "最大肌力", name: "六角槓硬舉 (Trap Bar DL)", unit: "kg", isDynamicTarget: true, b: 110, r: 135, desc: "換算相對體重力量" },
+      { cat: "最大肌力", name: "六角槓硬舉 (Trap Bar DL)", unit: "kg", isDynamicTarget: true, target: 131, b: 110, r: 135, desc: "換算相對體重力量" },
       { cat: "側向推地力", name: "側向單腳跳遠 (右跳左)", unit: "cm", target: 140, b: 122, r: 145, desc: "下桿前導側煞車鎖定" },
       { cat: "側向推地力", name: "側向單腳跳遠 (左跳右)", unit: "cm", target: 140, b: 120, r: 142, desc: "雙側對稱差僅 2cm (1.4%)" },
-      { cat: "核心爆發力", name: "3kg 藥球跪姿側擲 (右)", unit: "m", target: 6.5, b: 5.2, r: 6.8, desc: "純軀幹瞬間旋轉功率輸出" },
+      { cat: "胸腹爆發力", name: "3kg 藥球雙膝跪姿前擲", unit: "m", target: 6.0, b: 4.8, r: 6.4, desc: "胸腹動力鏈前向爆發功率" },
       { cat: "球場實效", name: "1號木桿頭速度 (Driver)", unit: "mph", target: 95, b: 91.6, r: 96.4, desc: "換算開球約 255y (+14y)" }
     ];
 
@@ -595,14 +618,12 @@
         const diff = (row.r - row.b);
         const pct = row.b !== 0 ? ((diff / row.b) * 100).toFixed(1) : 0;
         
-        // 動態計算六角槓標準 (體重 x 1.75)
-        let effectiveTarget = row.target;
-        let targetText = `≥ ${row.target}${row.unit}`;
-        
-        if (row.isDynamicTarget) {
-          effectiveTarget = Math.round(weight * 1.75);
-          targetText = `≥ ${effectiveTarget}kg (1.75x)`;
+        // 若六角槓勾選連動且未被手動覆蓋，按 1.75x BW 計算
+        if (row.isDynamicTarget && row.customTarget === undefined) {
+          row.target = Math.round(weight * 1.75);
         }
+
+        const effectiveTarget = row.target;
 
         let tagClass = "tag-warn";
         let tagText = "🔴 待加強";
@@ -628,7 +649,9 @@
         tr.innerHTML = `
           <td style="color: #666; font-weight: 500;">${row.cat}</td>
           <td style="font-weight: 600; text-align: left; padding-left: 8px;">${row.name}</td>
-          <td style="color: #666; font-size: 11.5px; font-weight: 600;">${targetText}</td>
+          <td style="color: #555; font-size: 11px;">
+            ≥ <input class="target-input" type="number" step="0.5" value="${row.target}" onchange="updateTarget(${index}, this.value)"> ${row.unit}
+          </td>
           <td><input class="num-input" type="number" step="0.5" value="${row.b}" onchange="updateRow(${index}, 'b', this.value)"></td>
           <td><input class="num-input" type="number" step="0.5" value="${row.r}" onchange="updateRow(${index}, 'r', this.value)"></td>
           <td style="font-weight: 700; font-size: 13px; color: ${diff >= 0 ? 'var(--green)' : 'var(--red)'};">
@@ -644,6 +667,13 @@
 
     function updateRow(index, field, val) {
       testData[index][field] = parseFloat(val) || 0;
+      renderTable();
+    }
+
+    // 支援直接自訂標準目標值
+    function updateTarget(index, val) {
+      testData[index].target = parseFloat(val) || 0;
+      testData[index].customTarget = true; // 標記為手動自訂
       renderTable();
     }
 
