@@ -58,7 +58,7 @@
       height: 297mm;
       max-width: 210mm;
       background: var(--bg);
-      padding: 15mm 16mm 12mm 16mm;
+      padding: 13mm 16mm 10mm 16mm;
       box-shadow: 0 4px 20px rgba(0,0,0,0.12);
       position: relative;
       color: var(--text);
@@ -129,11 +129,11 @@
       border-color: #e5b974;
     }
 
-    /* 5 欄網格資訊列 */
+    /* 7 欄微型網格（身高體重置中） */
     .info-grid {
       display: grid;
-      grid-template-columns: 1fr 0.65fr 0.65fr 1.25fr 1.25fr;
-      gap: 8px;
+      grid-template-columns: 1.0fr 0.75fr 0.6fr 0.85fr 0.85fr 1.35fr 1.3fr;
+      gap: 6px;
       margin: 10px 0 11px 0;
       width: 100%;
     }
@@ -142,7 +142,7 @@
       border: 1px solid rgba(61, 90, 75, 0.12);
       border-top: 2px solid var(--secondary);
       border-radius: 4px;
-      padding: 5px 8px;
+      padding: 5px 6px;
       display: flex;
       flex-direction: column;
       min-width: 0;
@@ -150,28 +150,47 @@
     .info-label-input {
       border: none;
       background: transparent;
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--primary);
       font-weight: 700;
       outline: none;
       width: 100%;
       margin-bottom: 2px;
       white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .text-center { text-align: center; }
+    .input-unit-wrapper {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px dashed #c0b9af;
+      width: 100%;
+    }
+    .input-unit-wrapper.center-align {
+      justify-content: center;
+    }
+    .input-unit-wrapper:focus-within {
+      border-bottom-color: var(--primary);
     }
     .info-input {
       width: 100%;
       min-width: 0;
       border: none;
       background: transparent;
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--text);
       font-weight: 600;
       outline: none;
       padding: 2px 0;
-      border-bottom: 1px dashed #c0b9af;
     }
-    .info-input:focus {
-      border-bottom-color: var(--primary);
+    .unit-suffix {
+      font-size: 10.5px;
+      color: #666;
+      font-weight: 600;
+      margin-left: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     /* KPI 核心亮點卡片 */
@@ -190,17 +209,52 @@
       text-align: center;
       border-top: 3px solid var(--secondary);
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .kpi-title { font-size: 11px; color: #666; margin-bottom: 2px; font-weight: 600; }
-    .kpi-value { font-size: 20px; font-weight: 800; color: var(--primary); }
-    .kpi-sub { font-size: 10.5px; color: var(--green); font-weight: 700; margin-top: 2px; }
+    .kpi-title-input {
+      border: none;
+      background: transparent;
+      font-size: 11.5px;
+      color: #666;
+      font-weight: 600;
+      text-align: center;
+      width: 100%;
+      outline: none;
+      margin-bottom: 2px;
+    }
+    .kpi-value-input {
+      border: none;
+      background: transparent;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      text-align: center;
+      width: 100%;
+      outline: none;
+    }
+    .kpi-sub-input {
+      border: none;
+      background: transparent;
+      font-size: 11px;
+      color: var(--green);
+      font-weight: 700;
+      text-align: center;
+      width: 100%;
+      outline: none;
+      margin-top: 2px;
+    }
+    .kpi-title-input:focus, .kpi-value-input:focus, .kpi-sub-input:focus {
+      border-bottom: 1px dashed var(--secondary);
+    }
 
-    /* 數據表格 */
+    /* 數據表格：字體放大與閱讀優化 */
     .section-title {
       font-family: "Noto Serif TC", "Songti TC", serif;
-      font-size: 14px;
+      font-size: 15.5px; /* 標題放大 */
       color: var(--primary);
-      margin-bottom: 5px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -209,19 +263,19 @@
     .section-title::before {
       content: "";
       width: 4px;
-      height: 13px;
+      height: 15px;
       background: var(--secondary);
       display: inline-block;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 11.5px;
+      font-size: 12.5px; /* 表格字體放大 */
       background: var(--card-bg);
       border-radius: 6px;
       overflow: hidden;
       border: 1px solid var(--border);
-      margin-bottom: 11px;
+      margin-bottom: 10px;
       table-layout: fixed;
     }
     th {
@@ -230,14 +284,14 @@
       font-weight: 600;
       padding: 7px 4px;
       text-align: center;
-      font-size: 11.5px;
+      font-size: 12px; /* 表頭文字放大 */
       letter-spacing: 0.5px;
     }
     td {
-      padding: 6.5px 5px;
+      padding: 6.5px 4px;
       border-bottom: 1px solid var(--border);
       text-align: center;
-      line-height: 1.3;
+      line-height: 1.35;
     }
     tr:last-child td { border-bottom: none; }
     tr:nth-child(even) { background-color: #fbfaf7; }
@@ -247,13 +301,13 @@
       border: 1px solid #ccc;
       border-radius: 3px;
       padding: 2px;
-      font-size: 12px;
+      font-size: 13px; /* 數據數值放大 */
       font-weight: 700;
       color: var(--text);
       outline: none;
     }
     .tag {
-      font-size: 10px;
+      font-size: 10.5px;
       font-weight: 700;
       padding: 2px 6px;
       border-radius: 10px;
@@ -264,19 +318,19 @@
     .tag-near { background: #fffde7; color: var(--yellow); }
     .tag-warn { background: #ffebee; color: var(--red); }
 
-    /* 下方兩大說明欄（改為 contenteditable div，徹底消除捲軸截斷） */
+    /* 下方兩大說明欄 */
     .notes-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       width: 100%;
     }
     .note-box {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 12px 14px;
+      padding: 10px 14px;
       border-left: 4.5px solid var(--primary);
       min-width: 0;
       display: flex;
@@ -290,23 +344,21 @@
       color: var(--primary);
       font-weight: 700;
       outline: none;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       padding: 1px 0;
       border-bottom: 1px dashed transparent;
     }
     .note-title-input:hover, .note-title-input:focus {
       border-bottom-color: var(--secondary);
     }
-    
-    /* 可直接編輯的文字容器：無捲軸、列印完整輸出 */
     .editable-div {
       width: 100%;
-      min-height: 155px;
-      font-size: 12px;
+      min-height: 135px;
+      font-size: 11.5px;
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.55;
       outline: none;
-      white-space: pre-wrap; /* 保留換行 */
+      white-space: pre-wrap;
       word-break: break-word;
     }
     .editable-div:focus {
@@ -346,7 +398,7 @@
       text-align: right;
     }
 
-    /* 列印與 PDF 輸出規則 (100% 完整無捲軸) */
+    /* 列印與 PDF 輸出規則 */
     @media print {
       body { background: none; padding: 0; }
       .controls { display: none; }
@@ -356,7 +408,7 @@
         max-width: 100%;
         height: 100%;
         margin: 0;
-        padding: 12mm 14mm 8mm 14mm;
+        padding: 10mm 14mm 8mm 14mm;
       }
       .badge-input {
         border: none !important;
@@ -364,8 +416,11 @@
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
-      .info-input, .info-label-input, .footer-input, .note-title-input { border-bottom: none !important; }
-      td input.num-input { border: none !important; background: transparent; font-size: 12px; }
+      .info-input, .info-label-input, .footer-input, .note-title-input, .kpi-title-input, .kpi-value-input, .kpi-sub-input { 
+        border-bottom: none !important; 
+      }
+      .input-unit-wrapper { border-bottom: none !important; }
+      td input.num-input { border: none !important; background: transparent; font-size: 13px; }
       
       .editable-div {
         min-height: auto !important;
@@ -380,7 +435,7 @@
 <body>
 
   <div class="controls">
-    <div style="font-size: 13px; color: #555;">💡 提示：說明欄已改為原生編輯容器，匯出 PDF 時絕無捲軸箭頭，文字 100% 完整印出。</div>
+    <div style="font-size: 13px; color: #555;">💡 提示：身高體重數據已置中，數據表格字體已放大，閱讀清晰且完美鎖定 A4 單頁。</div>
     <button class="btn" onclick="window.print()">🖨️ 列印 / 另存為高質感 PDF</button>
   </div>
 
@@ -397,83 +452,115 @@
         </div>
       </div>
 
-      <!-- 5 欄網格資訊列 -->
+      <!-- 7 欄微型網格（身高與體重已置中） -->
       <div class="info-grid">
         <div class="info-card">
           <input class="info-label-input" value="👤 學員姓名">
-          <input class="info-input" value="王大明 先生">
+          <div class="input-unit-wrapper">
+            <input class="info-input" value="王大明 先生">
+          </div>
         </div>
         <div class="info-card">
-          <input class="info-label-input" value="⛳ 目前差點">
-          <input class="info-input" value="16">
+          <input class="info-label-input" value="⛳ 差點">
+          <div class="input-unit-wrapper">
+            <input class="info-input" value="16">
+          </div>
         </div>
         <div class="info-card">
           <input class="info-label-input" value="🏌️ 球齡">
-          <input class="info-input" value="5 年">
+          <div class="input-unit-wrapper">
+            <input class="info-input" value="5">
+            <span class="unit-suffix">年</span>
+          </div>
+        </div>
+        <!-- 身高置中 -->
+        <div class="info-card">
+          <input class="info-label-input text-center" value="📏 身高">
+          <div class="input-unit-wrapper center-align">
+            <input class="info-input text-center" style="width: 38px;" id="user-height" type="number" value="175" oninput="renderTable()">
+            <span class="unit-suffix">cm</span>
+          </div>
+        </div>
+        <!-- 體重置中 -->
+        <div class="info-card">
+          <input class="info-label-input text-center" value="⚖️ 體重">
+          <div class="input-unit-wrapper center-align">
+            <input class="info-input text-center" style="width: 32px;" id="user-weight" type="number" value="75" oninput="renderTable()">
+            <span class="unit-suffix">kg</span>
+          </div>
         </div>
         <div class="info-card">
           <input class="info-label-input" value="📅 評估週期">
-          <input class="info-input" value="8 週 (2026/08 - 2026/10)">
+          <div class="input-unit-wrapper">
+            <input class="info-input" value="8 週 (2026/08 - 2026/10)">
+          </div>
         </div>
         <div class="info-card">
           <input class="info-label-input" value="🏋️ 負責教練">
-          <input class="info-input" value="游教練 (體能工作室)">
+          <div class="input-unit-wrapper">
+            <input class="info-input" value="游景明 教練">
+          </div>
         </div>
       </div>
 
       <!-- 核心 KPI 三卡 -->
       <div class="kpi-container">
+        <!-- 卡片 1 -->
         <div class="kpi-card">
-          <div class="kpi-title">1 號木桿速 / 球速</div>
-          <div class="kpi-value" id="kpi-speed">96.4 <span style="font-size: 13px; font-weight: normal;">mph</span></div>
-          <div class="kpi-sub" id="kpi-speed-sub">📈 +4.8 mph (增加約 14 碼)</div>
+          <input class="kpi-title-input" value="1 號木桿速 / 總碼數">
+          <input class="kpi-value-input" id="kpi-speed" value="96.4 mph (255y)">
+          <input class="kpi-sub-input" id="kpi-speed-sub" value="📈 +4.8 mph (增加約 14 碼)">
         </div>
+
+        <!-- 卡片 2 -->
         <div class="kpi-card">
-          <div class="kpi-title">擊球效率 (Smash Factor)</div>
-          <div class="kpi-value" id="kpi-smash">1.47</div>
-          <div class="kpi-sub" id="kpi-smash-sub">🟢 原 1.41 ➔ 甜點擊中率大幅提升</div>
+          <input class="kpi-title-input" value="擊球效率 (Smash Factor)">
+          <input class="kpi-value-input" value="1.47">
+          <input class="kpi-sub-input" value="🟢 原 1.41 ➔ 甜點擊中率大幅提升">
         </div>
+
+        <!-- 卡片 3 -->
         <div class="kpi-card">
-          <div class="kpi-title">胸椎旋轉與右髖對稱</div>
-          <div class="kpi-value" id="kpi-t-spine">46° / 34°</div>
-          <div class="kpi-sub" id="kpi-t-spine-sub">📈 轉身大幅釋放，徹底改善推骨盆</div>
+          <input class="kpi-title-input" value="胸椎旋轉與右髖對稱">
+          <input class="kpi-value-input" id="kpi-t-spine" value="46° / 34°">
+          <input class="kpi-sub-input" value="📈 轉身大幅釋放，徹底改善推骨盆">
         </div>
       </div>
 
-      <!-- 數據比對表 -->
+      <!-- 數據比對表 (字體已加大至 12.5px - 13px) -->
       <div class="section-title">運動機能與三維動力鏈數據比對</div>
       <table>
         <thead>
           <tr>
-            <th style="width: 14%;">維度分類</th>
-            <th style="width: 26%;">測試項目與對稱指標</th>
-            <th style="width: 10%;">標準</th>
-            <th style="width: 9%;">基準</th>
-            <th style="width: 9%;">回測</th>
+            <th style="width: 13%;">維度分類</th>
+            <th style="width: 27%;">測試項目與對稱指標</th>
+            <th style="width: 12%;">標準</th>
+            <th style="width: 8%;">基準</th>
+            <th style="width: 8%;">回測</th>
             <th style="width: 10%;">進步幅度</th>
-            <th style="width: 10%;">狀態判定</th>
-            <th style="width: 12%;">實務意義</th>
+            <th style="width: 9%;">狀態</th>
+            <th style="width: 13%;">實務意義與動態換算</th>
           </tr>
         </thead>
         <tbody id="table-body">
-          <!-- 資料由 JS 自動渲染並重算 -->
+          <!-- 資料由 JS 自動渲染並連動換算 -->
         </tbody>
       </table>
 
-      <!-- 下方兩大說明欄（使用 contenteditable，絕無捲軸與截斷） -->
+      <!-- 下方兩大說明欄 -->
       <div class="notes-container">
         <div class="note-box">
-          <input class="note-title-input" value="⛳ 動作機制突破與右髖強化計畫">
-          <div class="editable-div" contenteditable="true">1. 機制突破：胸椎轉幅達 46° 消除起身上抬；Smash Factor 升至 1.47 證明動力鏈動能流暢傳遞。
-2. 右髖攻堅策略：右髖內旋由 24° 躍升至 34°（改善 +41.7%），距標準僅差 1°。下階段導入「90/90 PAILs/RAILs + 關節末端主動抬離 (Lift-Offs)」等長收縮，鎖定右側後關節囊，徹底消除上桿 Sway 代償。</div>
+          <input class="note-title-input" value="⛳ 動作機制突破與數據深度解讀">
+          <div class="editable-div" contenteditable="true">1. 最大肌力與推地力突破：六角槓硬舉提升至 135kg（約 1.80x BW），達職業選手級垂直反作用力（vGRF）儲備標準；側向跳遠達 145cm（約身高 82.9%），雙側落差僅 2cm（1.4%），確保下桿瞬間能牢牢「煞車鎖定」，將能量精準傳遞至桿頭。
+2. 關節瓶頸攻堅：胸椎轉幅 46° 徹底消除上抬；右髖內旋進步至 34°（距標準差 1°）。下階段導入「90/90 PAILs/RAILs + 關節末端 Lift-Offs」，突破最後限制並鞏固上桿蓄能。</div>
         </div>
         <div class="note-box" style="border-left-color: var(--secondary);">
           <input class="note-title-input" value="🎯 賽季中 50 分鐘維護課表 (In-Season)">
-          <div class="editable-div" contenteditable="true">每週 1 次，無代謝延遲性痠痛（DOMS），鎖定神經衝動：
-• 00-08m 組織重置：右髖 90/90 PAILs/RAILs + 側臥胸椎螺旋開啟
-• 08-20m 神經時序：雙側 3kg 藥球擲遠 (4次x3組) + 地雷管旋轉爆發推
-• 20-40m 推地抗旋：下肢 CMJ 推地跳 (3次x3組) + 單側地雷管 RDL (6次x3組) + Pallof 抗旋
-• 40-50m 神經降載：PRI 90/90 骨盆後傾深呼吸 + 單槓減壓懸垂</div>
+          <div class="editable-div" contenteditable="true">每週 1 次，無代謝延遲性痠痛（DOMS），專注神經傳導與發力率（RFD）：
+• 00-08m 組織重置：右髖 90/90 PAILs/RAILs (2循環) + 側臥胸椎螺旋開啟 (每側6次)
+• 08-20m 神經時序：側向單腳爆發跳 (3次x3組，落點煞停2秒) + 3kg 跪姿藥球側擲 (4次x3組)
+• 20-40m 推地抗旋：六角槓硬舉爆發推 (3次x3組 @60%1RM, VBT>0.85m/s) + 單側地雷管 RDL + 半跪姿 Pallof 抗旋
+• 40-50m 神經降載：PRI 90/90 骨盆後傾呼吸 (10次深呼吸) + 單槓減壓懸垂 (30秒x2組)</div>
         </div>
       </div>
     </div>
@@ -486,46 +573,69 @@
   </div>
 
   <script>
+    // 8 大指標陣列
     const testData = [
-      { cat: "活動與分離", name: "坐姿胸椎主動旋轉 (右)", unit: "°", target: 45, b: 36, r: 46, desc: "充分蓄能消除上抬" },
-      { cat: "活動與分離", name: "坐姿胸椎主動旋轉 (左)", unit: "°", target: 45, b: 38, r: 47, desc: "送桿釋放動能順暢" },
-      { cat: "活動與分離", name: "仰臥髖關節內旋 IR (右)", unit: "°", target: 35, b: 24, r: 34, desc: "改善上桿推骨盆(差1°)" },
-      { cat: "活動與分離", name: "仰臥髖關節內旋 IR (左)", unit: "°", target: 35, b: 32, r: 38, desc: "減速剎車保護膝與腰" },
-      { cat: "推地力 GRF", name: "下肢下蹲跳高 (CMJ)", unit: "cm", target: 38, b: 31.5, r: 37.2, desc: "垂直推地力大幅增強" },
-      { cat: "旋轉爆發力", name: "3kg 藥球側向擲速 (右)", unit: "mph", target: 20, b: 17.5, r: 21.2, desc: "軀幹瞬間旋轉功率" },
-      { cat: "旋轉爆發力", name: "3kg 藥球側向擲速 (左)", unit: "mph", target: 20, b: 17.0, r: 20.8, desc: "雙側對稱差縮至1.9%" },
-      { cat: "球場實效", name: "1號木桿頭速度 (Driver)", unit: "mph", target: 95, b: 91.6, r: 96.4, desc: "有效開球增加約14碼" }
+      { cat: "活動與分離", name: "坐姿胸椎主動旋轉 (右)", unit: "°", target: 45, b: 36, r: 46, desc: "充分蓄能消除起身上抬" },
+      { cat: "活動與分離", name: "仰臥髖關節內旋 IR (右)", unit: "°", target: 35, b: 24, r: 34, desc: "改善上桿推骨盆(距標差1°)" },
+      { cat: "活動與分離", name: "仰臥髖關節內旋 IR (左)", unit: "°", target: 35, b: 32, r: 38, desc: "減速剎車保護前腳膝腰" },
+      { cat: "最大肌力", name: "六角槓硬舉 (Trap Bar DL)", unit: "kg", isDynamicTarget: true, b: 110, r: 135, desc: "換算相對體重力量" },
+      { cat: "側向推地力", name: "側向單腳跳遠 (右跳左)", unit: "cm", target: 140, b: 122, r: 145, desc: "下桿前導側煞車鎖定" },
+      { cat: "側向推地力", name: "側向單腳跳遠 (左跳右)", unit: "cm", target: 140, b: 120, r: 142, desc: "雙側對稱差僅 2cm (1.4%)" },
+      { cat: "核心爆發力", name: "3kg 藥球跪姿側擲 (右)", unit: "m", target: 6.5, b: 5.2, r: 6.8, desc: "純軀幹瞬間旋轉功率輸出" },
+      { cat: "球場實效", name: "1號木桿頭速度 (Driver)", unit: "mph", target: 95, b: 91.6, r: 96.4, desc: "換算開球約 255y (+14y)" }
     ];
 
     function renderTable() {
+      const height = parseFloat(document.getElementById("user-height").value) || 175;
+      const weight = parseFloat(document.getElementById("user-weight").value) || 75;
+
       const tbody = document.getElementById("table-body");
       tbody.innerHTML = "";
       testData.forEach((row, index) => {
         const diff = (row.r - row.b);
         const pct = row.b !== 0 ? ((diff / row.b) * 100).toFixed(1) : 0;
         
+        // 動態計算六角槓標準 (體重 x 1.75)
+        let effectiveTarget = row.target;
+        let targetText = `≥ ${row.target}${row.unit}`;
+        
+        if (row.isDynamicTarget) {
+          effectiveTarget = Math.round(weight * 1.75);
+          targetText = `≥ ${effectiveTarget}kg (1.75x)`;
+        }
+
         let tagClass = "tag-warn";
         let tagText = "🔴 待加強";
-        if (row.r >= row.target) {
+        if (row.r >= effectiveTarget) {
           tagClass = "tag-pass";
           tagText = "🟢 達標";
-        } else if (row.r >= row.target * 0.9) {
+        } else if (row.r >= effectiveTarget * 0.9) {
           tagClass = "tag-near";
           tagText = "🟡 接近";
+        }
+
+        // 動態生成連動說明
+        let dynamicDesc = row.desc;
+        if (row.name.includes("六角槓硬舉")) {
+          const bwRatio = (row.r / weight).toFixed(2);
+          dynamicDesc = `換算約 ${bwRatio}x BW (選手級)`;
+        } else if (row.name.includes("右跳左")) {
+          const heightRatio = ((row.r / height) * 100).toFixed(1);
+          dynamicDesc = `達身高 ${heightRatio}% (煞車鎖定)`;
         }
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td style="color: #666; font-weight: 500;">${row.cat}</td>
           <td style="font-weight: 600; text-align: left; padding-left: 8px;">${row.name}</td>
-          <td style="color: #777;">≥ ${row.target}${row.unit}</td>
-          <td><input class="num-input" type="number" step="0.1" value="${row.b}" onchange="updateRow(${index}, 'b', this.value)"></td>
-          <td><input class="num-input" type="number" step="0.1" value="${row.r}" onchange="updateRow(${index}, 'r', this.value)"></td>
-          <td style="font-weight: 700; color: ${diff >= 0 ? 'var(--green)' : 'var(--red)'};">
+          <td style="color: #666; font-size: 11.5px; font-weight: 600;">${targetText}</td>
+          <td><input class="num-input" type="number" step="0.5" value="${row.b}" onchange="updateRow(${index}, 'b', this.value)"></td>
+          <td><input class="num-input" type="number" step="0.5" value="${row.r}" onchange="updateRow(${index}, 'r', this.value)"></td>
+          <td style="font-weight: 700; font-size: 13px; color: ${diff >= 0 ? 'var(--green)' : 'var(--red)'};">
             ${diff >= 0 ? '+' : ''}${pct}%
           </td>
           <td><span class="tag ${tagClass}">${tagText}</span></td>
-          <td style="font-size: 10.5px; color: #555; text-align: left; padding-left: 4px;">${row.desc}</td>
+          <td style="font-size: 11px; color: #555; text-align: left; padding-left: 4px;">${dynamicDesc}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -540,15 +650,16 @@
     function updateKPIs() {
       const speed = testData.find(d => d.name.includes("桿頭速度"));
       if (speed) {
-        document.getElementById("kpi-speed").innerHTML = `${speed.r} <span style="font-size: 13px; font-weight: normal;">mph</span>`;
+        const yards = Math.round(speed.r * 2.65);
+        document.getElementById("kpi-speed").value = `${speed.r} mph (${yards}y)`;
         const diff = (speed.r - speed.b).toFixed(1);
-        const yards = Math.round(diff * 2.8);
-        document.getElementById("kpi-speed-sub").innerText = `📈 +${diff} mph (約增加 ${yards} 碼)`;
+        const addYards = Math.round(diff * 2.8);
+        document.getElementById("kpi-speed-sub").value = `📈 +${diff} mph (增加約 ${addYards} 碼)`;
       }
       const hipR = testData.find(d => d.name.includes("髖") && d.name.includes("右"));
       const tspineR = testData.find(d => d.name.includes("胸椎") && d.name.includes("右"));
       if (hipR && tspineR) {
-        document.getElementById("kpi-t-spine").innerText = `${tspineR.r}° / ${hipR.r}°`;
+        document.getElementById("kpi-t-spine").value = `${tspineR.r}° / ${hipR.r}°`;
       }
     }
 
