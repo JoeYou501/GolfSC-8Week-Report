@@ -105,7 +105,7 @@
       width: 100%;
     }
 
-    /* 右上角徽章 (預設 Golf S&C System) */
+    /* 右上角徽章 */
     .badge-wrap {
       flex-shrink: 0;
       margin-left: 12px;
@@ -129,11 +129,11 @@
       border-color: #e5b974;
     }
 
-    /* 4 欄網格資訊列 */
+    /* 5 欄網格資訊列 (加入球齡、完美防溢出) */
     .info-grid {
       display: grid;
-      grid-template-columns: 1fr 0.65fr 1.3fr 1.3fr;
-      gap: 10px;
+      grid-template-columns: 1fr 0.65fr 0.65fr 1.25fr 1.25fr;
+      gap: 8px;
       margin: 14px 0 14px 0;
       width: 100%;
     }
@@ -150,19 +150,20 @@
     .info-label-input {
       border: none;
       background: transparent;
-      font-size: 11.5px;
+      font-size: 11px;
       color: var(--primary);
       font-weight: 700;
       outline: none;
       width: 100%;
       margin-bottom: 2px;
+      white-space: nowrap;
     }
     .info-input {
       width: 100%;
       min-width: 0;
       border: none;
       background: transparent;
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text);
       font-weight: 600;
       outline: none;
@@ -263,7 +264,7 @@
     .tag-near { background: #fffde7; color: var(--yellow); }
     .tag-warn { background: #ffebee; color: var(--red); }
 
-    /* 臨床診斷與處方卡片 (標題改為可編輯) */
+    /* 臨床診斷與處方卡片 */
     .notes-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -366,13 +367,13 @@
 <body>
 
   <div class="controls">
-    <div style="font-size: 13px; color: #555;">💡 提示：右上角徽章、各區塊標題與內容皆已支援自訂編輯，點擊直接修改。</div>
+    <div style="font-size: 13px; color: #555;">💡 提示：基本資料列已加入「球齡」欄位，全區塊文字與數值皆支援隨點即改。</div>
     <button class="btn" onclick="window.print()">🖨️ 列印 / 另存為高質感 PDF</button>
   </div>
 
   <div class="a4-page">
     <div>
-      <!-- 頁首與可編輯徽章 (預設 Golf S&C System) -->
+      <!-- 頁首與可編輯徽章 -->
       <div class="header">
         <div class="title">
           <input class="main-title" value="高爾夫專項體能 8 週回測報告">
@@ -383,7 +384,7 @@
         </div>
       </div>
 
-      <!-- 4 欄網格資訊列 -->
+      <!-- 5 欄網格資訊列 (包含球齡) -->
       <div class="info-grid">
         <div class="info-card">
           <input class="info-label-input" value="👤 學員姓名">
@@ -392,6 +393,10 @@
         <div class="info-card">
           <input class="info-label-input" value="⛳ 目前差點">
           <input class="info-input" value="16">
+        </div>
+        <div class="info-card">
+          <input class="info-label-input" value="🏌️ 球齡">
+          <input class="info-input" value="5 年">
         </div>
         <div class="info-card">
           <input class="info-label-input" value="📅 評估週期">
@@ -442,7 +447,7 @@
         </tbody>
       </table>
 
-      <!-- 臨床診斷與下階段處方 (標題皆可自訂編輯) -->
+      <!-- 臨床診斷與下階段處方 -->
       <div class="notes-container">
         <div class="note-box">
           <input class="note-title-input" value="⛳ 動作機制突破與代償分析">
